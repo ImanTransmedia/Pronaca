@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-41209544569381886
+--- !u!114 &-4283070841902531549
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PlasterGris
+  m_Name: Concreto
   m_Shader: {fileID: -6465566751694194690, guid: c7a31a031552d0e428d982093bd6606c,
     type: 3}
   m_Parent: {fileID: 0}
@@ -51,7 +51,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: 47cc7419c6826e74f9f01a0b75801809, type: 3}
+        m_Texture: {fileID: 2800000, guid: 295a9215308332e4e9cc46f42a647bd8, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -79,7 +79,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: c52bf7a50ea1f45448e1df8d5316adc5, type: 3}
+        m_Texture: {fileID: 2800000, guid: 480de9028a80d704c909e4ac3d59d13b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -95,7 +95,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _R_M_AO:
-        m_Texture: {fileID: 2800000, guid: fe5da31568d30dd4089f854f570271b0, type: 3}
+        m_Texture: {fileID: 2800000, guid: bd1d480e815b6654bb7739d8fab9f94a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SSSMap:
@@ -168,7 +168,7 @@ Material:
     - _Parallax: 0.005
     - _PowerFresnel: 1
     - _PowerFresnelBC: 1
-    - _PowerTint: 1
+    - _PowerTint: 0
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ROUGHNESSMAP: 1
@@ -214,7 +214,7 @@ Material:
     - _SSS_Tint: {r: 0.8509804, g: 0.5803921, b: 0.38039213, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _SpecularColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 0}
-    - _Tile: {r: 0.5, g: 0.5, b: 0.5, a: 0}
-    - _Tint: {r: 0.735849, g: 0.735849, b: 0.735849, a: 0}
+    - _Tile: {r: 5, g: 5, b: 5, a: 0}
+    - _Tint: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
