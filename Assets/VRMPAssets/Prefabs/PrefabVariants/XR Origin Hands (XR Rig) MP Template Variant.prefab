@@ -5925,13 +5925,19 @@ PrefabInstance:
     - target: {fileID: 6008492305507399660, guid: d6878e1999eb4b44a9f5a263af86c185,
         type: 3}
       propertyPath: m_ActionAssets.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6008492305507399660, guid: d6878e1999eb4b44a9f5a263af86c185,
         type: 3}
       propertyPath: 'm_ActionAssets.Array.data[1]'
       value: 
       objectReference: {fileID: -944628639613478452, guid: aa2c615566fb6a6449c1b438e23ecacd,
+        type: 3}
+    - target: {fileID: 6008492305507399660, guid: d6878e1999eb4b44a9f5a263af86c185,
+        type: 3}
+      propertyPath: 'm_ActionAssets.Array.data[2]'
+      value: 
+      objectReference: {fileID: -944628639613478452, guid: b6e90a8959c94e54eb6301ed2d7a90bd,
         type: 3}
     - target: {fileID: 6098271024507647199, guid: d6878e1999eb4b44a9f5a263af86c185,
         type: 3}

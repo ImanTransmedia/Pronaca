@@ -26,7 +26,8 @@ public class SmoothOperator : MonoBehaviour
         var toggles = toggleGroup.ActiveToggles();
         foreach (Toggle toggle in toggles)
         {
-            projectSceneManager.SetScene(additiveScenes[toggle.name].branch, additiveScenes[toggle.name].index);
+            if(toggle.isOn)
+                projectSceneManager.SetScene(additiveScenes[toggle.name].branch, additiveScenes[toggle.name].index);
         }
     }
 }

@@ -1,0 +1,74 @@
+{
+    "version": 1,
+    "name": "KonamiCode",
+    "maps": [
+        {
+            "name": "LeftController",
+            "id": "6d4629dd-6e5f-417c-bea8-e58d656a0377",
+            "actions": [
+                {
+                    "name": "Menu",
+                    "type": "Button",
+                    "id": "edf5cca6-d7f4-4542-935b-3cfd0356995d",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "c0472925-10f7-44dd-9e0c-73eeff5fe981",
+                    "path": "<Keyboard>/numpad0",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Menu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Button With One Modifier",
+                    "id": "a712c8ee-43b9-4442-97ce-27b0ddee4c4f",
+                    "path": "ButtonWithOneModifier",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Menu",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Modifier",
+                    "id": "36569bf2-73d1-47d8-ae33-8295649d8096",
+                    "path": "<XRController>{LeftHand}/{SecondaryButton}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Menu",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Button",
+                    "id": "0caf2ac2-85fb-4c56-b11c-bcbc1d4a576d",
+                    "path": "<XRController>{LeftHand}/{MenuButton}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Menu",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                }
+            ]
+        },
+        {
+            "name": "RightController",
+            "id": "0f1d522d-c6a3-4e1c-962d-0d78d73a855c",
+            "actions": [],
+            "bindings": []
+        }
+    ],
+    "controlSchemes": []
+}

@@ -3,9 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Netcode;
+using Unity.Netcode.Components;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using XRMultiplayer;
 
 public class ProjectSceneManager : NetworkBehaviour
 {
@@ -43,6 +46,54 @@ public class ProjectSceneManager : NetworkBehaviour
     {
         Debug.Log($"<color=cyan>[Connected]</color> Client with ID {clientId} connected.");
         m_Connected = true;
+        // HandleSpawnRpc(clientId);
+    }
+    [Rpc(SendTo.Server)]
+    void HandleSpawnRpc(ulong clientId)
+    {
+        // 1. Find the client in the NetworkManager's list
+        if (NetworkManager.Singleton.ConnectedClients.TryGetValue(clientId, out NetworkClient networkClient))
+        {
+            // 2. Get the player's NetworkObject from the client
+            NetworkObject playerObject = networkClient.PlayerObject;
+
+            if (playerObject != null)
+            {
+                // 3. (CRITICAL) Disable CharacterController if it exists
+                // A CharacterController will fight the teleport and snap the player back.
+                CharacterController controller = playerObject.GetComponent<CharacterController>();
+                if (controller != null)
+                {
+                    controller.enabled = false;
+                }
+
+                // 4. Get the NetworkTransform and call Teleport
+                // This instantly moves the object on all clients.
+                Vector3 spawnpoint = new Vector3(UnityEngine.Random.Range(-5f, 5), 0, UnityEngine.Random.Range(-5f, 5));
+                Debug.Log($"<color=cyan>[Spawned] {playerObject.name} </color> on: {spawnpoint.x},{spawnpoint.y},{spawnpoint.z}. For: {playerObject.NetworkTransforms.Count}");
+                //NetworkTransform networkTransform = playerObject.GetComponent<NetworkTransform>();
+                //networkTransform.Teleport(spawnpoint, Quaternion.identity, playerObject.transform.localScale);
+
+                foreach(NetworkTransform ntransform in playerObject.NetworkTransforms)
+                {
+                    ntransform.Teleport(spawnpoint + ntransform.transform.localPosition, Quaternion.identity, playerObject.transform.localScale);
+                }
+                
+                // 5. Re-enable the CharacterController after the teleport
+                if (controller != null)
+                {
+                    controller.enabled = true;
+                }
+            }
+            else
+            {
+                Debug.LogWarning($"Could not find PlayerObject for client: {clientId}");
+            }
+        }
+        else
+        {
+            Debug.LogWarning($"Could not find client: {clientId}");
+        }
     }
     
     IEnumerator TimeToPing(float delay, string sceneName)
@@ -54,9 +105,9 @@ public class ProjectSceneManager : NetworkBehaviour
     [Rpc(SendTo.Server)]
     public void PingRpc(string sceneName)
     {
-        Debug.Log("<color=magenta>Loaded Scenes"+ m_LoadedScenes.Count + " </color>");
+        Debug.Log("<color=magenta>Loaded Scenes "+ m_LoadedScenes.Count + " </color>");
         PongRpc(sceneName, "PONG!");
-        if(m_LoadedScenes.Count>1)
+        if(m_LoadedScenes.Count>=1)
         {
             UnloadScene(m_LoadedScenes.Last().Key);
         }
@@ -77,8 +128,20 @@ public class ProjectSceneManager : NetworkBehaviour
     {
         m_BranchIndex = branch;
         m_SceneIndex = sceneindex;
-        Debug.Log("<color=magenta>Key!</color>");
-        StartCoroutine(TimeToPing(1, m_SceneNames1[m_SceneIndex]));
+        Debug.Log($"<color=magenta>Menu {branch}, {sceneindex}!</color>");
+        switch(branch)
+        {
+            case 1:
+                StartCoroutine(TimeToPing(1, m_SceneNames1[m_SceneIndex]));
+                break;
+            case 2:
+                StartCoroutine(TimeToPing(1, m_SceneNames2[m_SceneIndex]));
+                break;
+            case 3:
+                StartCoroutine(TimeToPing(1, m_SceneNames3[m_SceneIndex]));
+                break;
+        }
+        
     }
     void Update()
     {
@@ -164,6 +227,11 @@ public class ProjectSceneManager : NetworkBehaviour
                 if (sceneEvent.SceneName != scenename)
                 {
                     StartCoroutine(TimeToPing(0, scenename));
+                }
+                NetworkPhysicsInteractable[] interactables = GameObject.FindObjectsByType<NetworkPhysicsInteractable>(FindObjectsSortMode.None);
+                foreach(NetworkPhysicsInteractable interactable in interactables)
+                {
+                    interactable.NetworkObject.Despawn();
                 }
             }
         }
