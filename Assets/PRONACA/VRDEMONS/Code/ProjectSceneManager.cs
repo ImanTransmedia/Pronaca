@@ -44,6 +44,7 @@ public class ProjectSceneManager : NetworkBehaviour
         Debug.Log($"<color=cyan>[Connected]</color> Client with ID {clientId} connected.");
         m_Connected = true;
     }
+    
     IEnumerator TimeToPing(float delay, string sceneName)
     {
         yield return new WaitForSeconds(delay);
@@ -67,11 +68,18 @@ public class ProjectSceneManager : NetworkBehaviour
     }
 
     [Rpc(SendTo.ClientsAndHost)]
-    void PongRpc(string m_SceneName, string message)
+    void PongRpc(string sceneName, string message)
     {
-        Debug.Log($"<color=magenta>Received pong from server for ping {m_SceneName} and message {message}</color>");
+        Debug.Log($"<color=magenta>Received pong from server for ping {sceneName} and message {message}</color>");
     }
 
+    public void SetScene(int branch, int sceneindex)
+    {
+        m_BranchIndex = branch;
+        m_SceneIndex = sceneindex;
+        Debug.Log("<color=magenta>Key!</color>");
+        StartCoroutine(TimeToPing(1, m_SceneNames1[m_SceneIndex]));
+    }
     void Update()
     {
         if (m_Connected && Keyboard.current.numpad1Key.wasPressedThisFrame)

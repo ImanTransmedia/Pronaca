@@ -83,7 +83,7 @@ namespace XRMultiplayer
         private void Awake()
         {
             m_VoiceChatManager = FindFirstObjectByType<VoiceChatManager>();
-            SessionManager.status.Subscribe(ConnectedUpdated);
+            //SessionManager.status.Subscribe(ConnectedUpdated);
             m_CooldownImage.enabled = false;
         }
 
@@ -176,7 +176,7 @@ namespace XRMultiplayer
         {
             XRINetworkGameManager.Connected.Subscribe(OnConnected);
             XRINetworkGameManager.Instance.QuickJoinLobby();
-            m_ConnectionSuccessText.text = "Joining Random";
+            m_ConnectionSuccessText.text = "Conectando...";
         }
 
         public void SetVoiceChatAudidibleDistance(int audibleDistance)
@@ -242,7 +242,7 @@ namespace XRMultiplayer
 
         void ConnectedUpdated(string update)
         {
-            m_ConnectionUpdatedText.text = $"<b>Status:</b> {update}";
+            m_ConnectionUpdatedText.text = $"{update}";
         }
 
         public void FailedToConnect(string reason)

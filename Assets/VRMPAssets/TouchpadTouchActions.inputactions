@@ -1,4 +1,5 @@
 {
+    "version": 1,
     "name": "TouchpadTouchActions",
     "maps": [
         {
@@ -9,7 +10,7 @@
                     "name": "ThumbTouched",
                     "type": "Button",
                     "id": "de376d65-c48f-4ed9-b5df-5775be0b7786",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -18,7 +19,7 @@
                     "name": "Menu",
                     "type": "Button",
                     "id": "edf5cca6-d7f4-4542-935b-3cfd0356995d",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -79,6 +80,17 @@
                     "action": "Menu",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c0472925-10f7-44dd-9e0c-73eeff5fe981",
+                    "path": "<Keyboard>/numpad0",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Menu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -90,7 +102,7 @@
                     "name": "ThumbTouched",
                     "type": "Button",
                     "id": "fa484675-2d36-4a13-8a7a-d9dd699cf223",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
