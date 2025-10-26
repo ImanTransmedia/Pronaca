@@ -485,6 +485,74 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 116116164}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &143483240
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5169651498723862145, guid: 72f45ac16a64ad348be5dfc0f84de6f6,
+        type: 3}
+      propertyPath: m_Name
+      value: BakeryDisplayStand_fbx
+      objectReference: {fileID: 0}
+    - target: {fileID: 5545507881512614971, guid: 72f45ac16a64ad348be5dfc0f84de6f6,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.1861082
+      objectReference: {fileID: 0}
+    - target: {fileID: 5545507881512614971, guid: 72f45ac16a64ad348be5dfc0f84de6f6,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.03306997
+      objectReference: {fileID: 0}
+    - target: {fileID: 5545507881512614971, guid: 72f45ac16a64ad348be5dfc0f84de6f6,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -8.893782
+      objectReference: {fileID: 0}
+    - target: {fileID: 5545507881512614971, guid: 72f45ac16a64ad348be5dfc0f84de6f6,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5545507881512614971, guid: 72f45ac16a64ad348be5dfc0f84de6f6,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5545507881512614971, guid: 72f45ac16a64ad348be5dfc0f84de6f6,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5545507881512614971, guid: 72f45ac16a64ad348be5dfc0f84de6f6,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5545507881512614971, guid: 72f45ac16a64ad348be5dfc0f84de6f6,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5545507881512614971, guid: 72f45ac16a64ad348be5dfc0f84de6f6,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 5545507881512614971, guid: 72f45ac16a64ad348be5dfc0f84de6f6,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 72f45ac16a64ad348be5dfc0f84de6f6, type: 3}
 --- !u!1 &148044146
 GameObject:
   m_ObjectHideFlags: 0
@@ -10382,74 +10450,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c926af4d62b8fc949a8954c6cbabf595, type: 3}
---- !u!1001 &2846568132813281927
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 5169651498723862145, guid: 72f45ac16a64ad348be5dfc0f84de6f6,
-        type: 3}
-      propertyPath: m_Name
-      value: BakeryDisplayStand_fbx
-      objectReference: {fileID: 0}
-    - target: {fileID: 5545507881512614971, guid: 72f45ac16a64ad348be5dfc0f84de6f6,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.106
-      objectReference: {fileID: 0}
-    - target: {fileID: 5545507881512614971, guid: 72f45ac16a64ad348be5dfc0f84de6f6,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.036
-      objectReference: {fileID: 0}
-    - target: {fileID: 5545507881512614971, guid: 72f45ac16a64ad348be5dfc0f84de6f6,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -9.084
-      objectReference: {fileID: 0}
-    - target: {fileID: 5545507881512614971, guid: 72f45ac16a64ad348be5dfc0f84de6f6,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5545507881512614971, guid: 72f45ac16a64ad348be5dfc0f84de6f6,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5545507881512614971, guid: 72f45ac16a64ad348be5dfc0f84de6f6,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5545507881512614971, guid: 72f45ac16a64ad348be5dfc0f84de6f6,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5545507881512614971, guid: 72f45ac16a64ad348be5dfc0f84de6f6,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5545507881512614971, guid: 72f45ac16a64ad348be5dfc0f84de6f6,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 180
-      objectReference: {fileID: 0}
-    - target: {fileID: 5545507881512614971, guid: 72f45ac16a64ad348be5dfc0f84de6f6,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 72f45ac16a64ad348be5dfc0f84de6f6, type: 3}
 --- !u!1001 &8348023335638086372
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10544,7 +10544,6 @@ SceneRoots:
   - {fileID: 231178891}
   - {fileID: 230447148}
   - {fileID: 705586165}
-  - {fileID: 2846568132813281927}
   - {fileID: 2031533959}
   - {fileID: 1210301616}
   - {fileID: 359912693}
@@ -10555,3 +10554,4 @@ SceneRoots:
   - {fileID: 781656440}
   - {fileID: 838893827}
   - {fileID: 194845287}
+  - {fileID: 143483240}
