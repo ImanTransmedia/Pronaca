@@ -15,7 +15,7 @@ namespace XRMultiplayer
         /// <summary>
         /// Default name for the player.
         /// </summary>
-        [SerializeField, Tooltip("Default name for the player")] string m_DefaultPlayerName = "Unity Creator";
+        [SerializeField, Tooltip("Default name for the player")] string[] m_DefaultPlayerName;
         [SerializeField] TMP_Text m_PlayerNameText;
         [SerializeField] TMP_Text m_PlayerInitialText;
         [SerializeField] Image[] m_PlayerColorIcons;
@@ -62,7 +62,7 @@ namespace XRMultiplayer
 
         void SetupPlayerDefaults()
         {
-            XRINetworkGameManager.LocalPlayerName.Value = m_DefaultPlayerName;
+            XRINetworkGameManager.LocalPlayerName.Value = m_DefaultPlayerName[Random.Range(0, m_DefaultPlayerName.Length)];
             XRINetworkGameManager.LocalPlayerColor.Value = m_PlayerColors[Random.Range(0, m_PlayerColors.Length)];
         }
 
