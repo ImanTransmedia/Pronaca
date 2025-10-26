@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_refri_plumrose
+  m_Name: SMGP_2D_Icons_rice
   m_Shader: {fileID: -6465566751694194690, guid: c7a31a031552d0e428d982093bd6606c,
     type: 3}
   m_Parent: {fileID: 0}
@@ -17,7 +17,7 @@ Material:
   - _MAPPING1_UV
   - _ROUGHNESSMAP
   m_InvalidKeywords: []
-  m_LightmapFlags: 4
+  m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -33,23 +33,7 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _BaseMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _BumpMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _DetailAlbedoMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _DetailMask:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _DetailNormalMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -66,30 +50,14 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: f94cf0d9c7800884a91ffc3c17b43031, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MetallicGlossMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _OcclusionMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _ParallaxMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 5d9538bda7249644b9c10133fe58e402, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _R_M_AO:
-        m_Texture: {fileID: 2800000, guid: e4decca06fdf50f4ca82d27c2e2bcdf7, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _SSSMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _SpecGlossMap:
+    - _SSSMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -109,7 +77,6 @@ Material:
     m_Floats:
     - _AOBrillo: 1
     - _AOContraste: 1
-    - _AddPrecomputedVelocity: 0
     - _Alpha: 1
     - _AlphaClip: 0
     - _AlphaToMask: 0
@@ -119,28 +86,19 @@ Material:
     - _BlendModePreserveSpecular: 1
     - _Brillo: 1
     - _BrilloRoughness: 1
-    - _BumpScale: 1
     - _COLORMAP: 1
     - _CastShadows: 1
-    - _ClearCoatMask: 0
-    - _ClearCoatSmoothness: 0
     - _Contraste: 1
     - _Cull: 2
-    - _Cutoff: 0.5
-    - _DetailAlbedoMapScale: 1
-    - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _DstBlendAlpha: 0
-    - _EnvironmentReflections: 1
     - _FABRIC: 0
     - _FresnelReflection: 0
     - _Fuzzi: 1
     - _FuzziPower: 2
     - _FuzzyBias: 0
     - _FuzzyScale: 1
-    - _GlossMapScale: 0
-    - _Glossiness: 0
-    - _GlossyReflections: 0
+    - _Glossiness: 0.5
     - _HUE: 0
     - _InvertRoughness: 0
     - _MAPPING1: 0
@@ -151,8 +109,6 @@ Material:
     - _NoiseScale: 0
     - _NormalDetails: 0
     - _NormalStrenght: 1
-    - _OcclusionStrength: 1
-    - _Parallax: 0.005
     - _PowerFresnel: 1
     - _PowerFresnelBC: 1
     - _PowerTint: 0
@@ -169,9 +125,6 @@ Material:
     - _SSS_ShadowStrenght: 0.5
     - _Saturacion: 1
     - _Seed: 0
-    - _Smoothness: 0.5
-    - _SmoothnessTextureChannel: 0
-    - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
@@ -189,23 +142,21 @@ Material:
     m_Colors:
     - _AOClamp: {r: 0, g: 1, b: 0, a: 0}
     - _BackFaceColor: {r: 0, g: 0, b: 0, a: 0}
-    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _BlancosYNegros: {r: 0, g: 1, b: 0, a: 0}
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 0.8, g: 0.8, b: 0.8, a: 0}
     - _ColorClamp: {r: 0, g: 1, b: 0, a: 0}
     - _ColorFuzzi: {r: 1, g: 1, b: 1, a: 0}
     - _ColorSSS: {r: 0, g: 0, b: 0, a: 0}
-    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 0}
     - _M_B_N: {r: 0, g: 1, b: 0, a: 0}
     - _Offset: {r: 0, g: 0, b: 0, a: 0}
     - _SSS_Tint: {r: 0.8509804, g: 0.5803921, b: 0.38039213, a: 0}
-    - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _SpecularColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 0}
     - _Tile: {r: 1, g: 1, b: 1, a: 0}
     - _Tint: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
---- !u!114 &7589999018584999658
+--- !u!114 &7823365509255991471
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
