@@ -1,5 +1,12 @@
 fileFormatVersion: 2
 guid: 80d14e973e2f9fc41b8e8f0eda335cf0
+AssetOrigin:
+  serializedVersion: 1
+  productId: 12042
+  packageName: Supermarket Gluttony Pack
+  packageVersion: 6.0
+  assetPath: Assets/Supermarket_Gluttony_Pack/SMGP_Models/SMGP_MOD_Tamagoyaki_01.fbx
+  uploadId: 762683
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -16,8 +23,6 @@ ModelImporter:
     optimizeGameObjects: 0
     removeConstantScaleCurves: 0
     motionNodeName: 
-    rigImportErrors: 
-    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -96,11 +101,11 @@ ModelImporter:
     globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1
-  animationType: 2
+  animationType: 0
   humanoidOversampling: 1
   avatarSetup: 0
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
@@ -110,10 +115,3 @@ ModelImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 12042
-  packageName: Supermarket Gluttony Pack
-  packageVersion: 6.0
-  assetPath: Assets/Supermarket_Gluttony_Pack/SMGP_Models/SMGP_MOD_Tamagoyaki_01.fbx
-  uploadId: 762683
