@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.Netcode;
 using Unity.Netcode.Components;
-using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.XR.Interaction.Toolkit.Locomotion.Teleportation;
 using XRMultiplayer;
 
 public class ProjectSceneManager : NetworkBehaviour
@@ -27,16 +27,20 @@ public class ProjectSceneManager : NetworkBehaviour
     /// </summary>
     private Scene m_LoadedScene;
     private Dictionary<string, Scene> m_LoadedScenes = new Dictionary<string, Scene>();
+    private TeleportationProvider m_LocalPlayerTeleportProvider;
 
 
     IEnumerator Start()
     {
+        m_LocalPlayerTeleportProvider = FindFirstObjectByType<TeleportationProvider>();
         yield return null;
     }
 
     public override void OnNetworkSpawn()
     {
         NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
+        NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnect;
+        NetworkManager.Singleton.OnSessionOwnerPromoted += HostUpdated;
         NetworkManager.Singleton.SceneManager.SetClientSynchronizationMode(LoadSceneMode.Additive);
         NetworkManager.Singleton.SceneManager.PostSynchronizationSceneUnloading = false;
         NetworkManager.Singleton.SceneManager.OnSceneEvent += HandleSceneEvent;
@@ -46,8 +50,47 @@ public class ProjectSceneManager : NetworkBehaviour
     {
         Debug.Log($"<color=cyan>[Connected]</color> Client with ID {clientId} connected.");
         m_Connected = true;
-        // HandleSpawnRpc(clientId);
+
+        TeleportRequest teleportRequest = new()
+        {
+            destinationPosition = new Vector3(UnityEngine.Random.Range(-5f, 5), 0, UnityEngine.Random.Range(-5f, 5)),
+            destinationRotation = Quaternion.identity,
+            matchOrientation = MatchOrientation.TargetUpAndForward
+        };
+
+        m_LocalPlayerTeleportProvider.QueueTeleportRequest(teleportRequest);
     }
+
+    private void OnClientDisconnect(ulong clientId)
+    {
+        if (IsServer)
+        {
+            Debug.Log($"<color=orange>[Disconnected]</color> Client with ID {clientId} disconnected from server.");
+            int clientCount = NetworkManager.Singleton.ConnectedClients.Count;
+            if (clientCount == 0)
+            {
+                m_Connected = false;
+                Debug.Log("<color=orange>All clients have disconnected. Server is no longer connected.</color>");
+            }
+        }
+        else // IsClient                                                                               
+        {
+            Debug.Log($"<color=orange>[Disconnected]</color> Client disconnected from server with ID  {clientId}.");
+            m_Connected = false;
+        }
+        // The Host is always ClientId 0
+        if (clientId == 0)
+        {
+            Debug.Log("Host disconnected. Starting migration logic...");
+            // Implement your logic to find and start a new host
+        }
+    }
+    public virtual void HostUpdated(ulong newHostId)
+    {
+        Debug.Log($"Host Updated: {(NetworkObject.OwnerClientId == newHostId)}");
+        SceneManager.LoadScene(0, LoadSceneMode.Single);
+    }
+
     [Rpc(SendTo.Server)]
     void HandleSpawnRpc(ulong clientId)
     {
@@ -71,6 +114,7 @@ public class ProjectSceneManager : NetworkBehaviour
                 // This instantly moves the object on all clients.
                 Vector3 spawnpoint = new Vector3(UnityEngine.Random.Range(-5f, 5), 0, UnityEngine.Random.Range(-5f, 5));
                 Debug.Log($"<color=cyan>[Spawned] {playerObject.name} </color> on: {spawnpoint.x},{spawnpoint.y},{spawnpoint.z}. For: {playerObject.NetworkTransforms.Count}");
+
                 //NetworkTransform networkTransform = playerObject.GetComponent<NetworkTransform>();
                 //networkTransform.Teleport(spawnpoint, Quaternion.identity, playerObject.transform.localScale);
 
@@ -195,7 +239,7 @@ public class ProjectSceneManager : NetworkBehaviour
     {
         if (sceneEvent.SceneEventType == SceneEventType.LoadComplete)
         {
-            if (!m_LoadedScenes.ContainsKey(sceneEvent.SceneName))
+            if (!m_LoadedScenes.ContainsKey(sceneEvent.SceneName) && sceneEvent.SceneName != "01 Lobby")
             {
                 m_LoadedScenes.Add(sceneEvent.SceneName, sceneEvent.Scene);
                 Debug.Log($"Server: Successfully loaded and stored scene '{sceneEvent.SceneName}'");
