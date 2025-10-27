@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.Netcode;
 using Unity.Netcode.Components;
-using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.XR.Interaction.Toolkit.Locomotion.Teleportation;
 using XRMultiplayer;
 
 public class ProjectSceneManager : NetworkBehaviour
@@ -27,16 +27,38 @@ public class ProjectSceneManager : NetworkBehaviour
     /// </summary>
     private Scene m_LoadedScene;
     private Dictionary<string, Scene> m_LoadedScenes = new Dictionary<string, Scene>();
+    private TeleportationProvider m_LocalPlayerTeleportProvider;
 
 
     IEnumerator Start()
     {
+        m_LocalPlayerTeleportProvider = FindFirstObjectByType<TeleportationProvider>();
         yield return null;
+        if (XRINetworkGameManager.Instance != null)
+        {
+            XRINetworkGameManager.Instance.OnConnectionFailedAction += OnConnectionFailed;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (XRINetworkGameManager.Instance != null)
+        {
+            XRINetworkGameManager.Instance.OnConnectionFailedAction -= OnConnectionFailed;
+        }
+    }
+
+    private void OnConnectionFailed(string reason)
+    {
+        Debug.Log($"[ProjectSceneManager] Received connection failed event with reason: {reason}");
+        SceneManager.LoadScene(0, LoadSceneMode.Single);
     }
 
     public override void OnNetworkSpawn()
     {
         NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
+        NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnect;
+        NetworkManager.Singleton.OnSessionOwnerPromoted += HostUpdated;
         NetworkManager.Singleton.SceneManager.SetClientSynchronizationMode(LoadSceneMode.Additive);
         NetworkManager.Singleton.SceneManager.PostSynchronizationSceneUnloading = false;
         NetworkManager.Singleton.SceneManager.OnSceneEvent += HandleSceneEvent;
@@ -46,56 +68,47 @@ public class ProjectSceneManager : NetworkBehaviour
     {
         Debug.Log($"<color=cyan>[Connected]</color> Client with ID {clientId} connected.");
         m_Connected = true;
-        // HandleSpawnRpc(clientId);
+
+        TeleportRequest teleportRequest = new()
+        {
+            destinationPosition = new Vector3(UnityEngine.Random.Range(-5f, 5), 0, UnityEngine.Random.Range(-5f, 5)),
+            destinationRotation = Quaternion.identity,
+            matchOrientation = MatchOrientation.TargetUpAndForward
+        };
+
+        m_LocalPlayerTeleportProvider.QueueTeleportRequest(teleportRequest);
     }
-    [Rpc(SendTo.Server)]
-    void HandleSpawnRpc(ulong clientId)
+
+    private void OnClientDisconnect(ulong clientId)
     {
-        // 1. Find the client in the NetworkManager's list
-        if (NetworkManager.Singleton.ConnectedClients.TryGetValue(clientId, out NetworkClient networkClient))
+        if (IsServer)
         {
-            // 2. Get the player's NetworkObject from the client
-            NetworkObject playerObject = networkClient.PlayerObject;
-
-            if (playerObject != null)
+            Debug.Log($"<color=orange>[Disconnected]</color> Client with ID {clientId} disconnected from server.");
+            int clientCount = NetworkManager.Singleton.ConnectedClients.Count;
+            if (clientCount == 0)
             {
-                // 3. (CRITICAL) Disable CharacterController if it exists
-                // A CharacterController will fight the teleport and snap the player back.
-                CharacterController controller = playerObject.GetComponent<CharacterController>();
-                if (controller != null)
-                {
-                    controller.enabled = false;
-                }
-
-                // 4. Get the NetworkTransform and call Teleport
-                // This instantly moves the object on all clients.
-                Vector3 spawnpoint = new Vector3(UnityEngine.Random.Range(-5f, 5), 0, UnityEngine.Random.Range(-5f, 5));
-                Debug.Log($"<color=cyan>[Spawned] {playerObject.name} </color> on: {spawnpoint.x},{spawnpoint.y},{spawnpoint.z}. For: {playerObject.NetworkTransforms.Count}");
-                //NetworkTransform networkTransform = playerObject.GetComponent<NetworkTransform>();
-                //networkTransform.Teleport(spawnpoint, Quaternion.identity, playerObject.transform.localScale);
-
-                foreach(NetworkTransform ntransform in playerObject.NetworkTransforms)
-                {
-                    ntransform.Teleport(spawnpoint + ntransform.transform.localPosition, Quaternion.identity, playerObject.transform.localScale);
-                }
-                
-                // 5. Re-enable the CharacterController after the teleport
-                if (controller != null)
-                {
-                    controller.enabled = true;
-                }
-            }
-            else
-            {
-                Debug.LogWarning($"Could not find PlayerObject for client: {clientId}");
+                m_Connected = false;
+                Debug.Log("<color=orange>All clients have disconnected. Server is no longer connected.</color>");
             }
         }
-        else
+        else // IsClient                                                                               
         {
-            Debug.LogWarning($"Could not find client: {clientId}");
+            Debug.Log($"<color=orange>[Disconnected]</color> Client disconnected from server with ID  {clientId}.");
+            m_Connected = false;
+        }
+        // The Host is always ClientId 0
+        if (clientId == 0)
+        {
+            Debug.Log("Host disconnected. Starting migration logic...");
+            // Implement your logic to find and start a new host
         }
     }
-    
+    public virtual void HostUpdated(ulong newHostId)
+    {
+        Debug.Log($"Host Updated: {(NetworkObject.OwnerClientId == newHostId)}");
+        SceneManager.LoadScene(0, LoadSceneMode.Single);
+    }
+
     IEnumerator TimeToPing(float delay, string sceneName)
     {
         yield return new WaitForSeconds(delay);
@@ -195,7 +208,7 @@ public class ProjectSceneManager : NetworkBehaviour
     {
         if (sceneEvent.SceneEventType == SceneEventType.LoadComplete)
         {
-            if (!m_LoadedScenes.ContainsKey(sceneEvent.SceneName))
+            if (!m_LoadedScenes.ContainsKey(sceneEvent.SceneName) && sceneEvent.SceneName != "01 Lobby")
             {
                 m_LoadedScenes.Add(sceneEvent.SceneName, sceneEvent.Scene);
                 Debug.Log($"Server: Successfully loaded and stored scene '{sceneEvent.SceneName}'");
