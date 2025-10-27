@@ -3,9 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Netcode;
+using Unity.Netcode.Components;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.XR.Interaction.Toolkit.Locomotion.Teleportation;
+using XRMultiplayer;
 
 public class ProjectSceneManager : NetworkBehaviour
 {
@@ -24,16 +27,38 @@ public class ProjectSceneManager : NetworkBehaviour
     /// </summary>
     private Scene m_LoadedScene;
     private Dictionary<string, Scene> m_LoadedScenes = new Dictionary<string, Scene>();
+    private TeleportationProvider m_LocalPlayerTeleportProvider;
 
 
     IEnumerator Start()
     {
+        m_LocalPlayerTeleportProvider = FindFirstObjectByType<TeleportationProvider>();
         yield return null;
+        if (XRINetworkGameManager.Instance != null)
+        {
+            XRINetworkGameManager.Instance.OnConnectionFailedAction += OnConnectionFailed;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (XRINetworkGameManager.Instance != null)
+        {
+            XRINetworkGameManager.Instance.OnConnectionFailedAction -= OnConnectionFailed;
+        }
+    }
+
+    private void OnConnectionFailed(string reason)
+    {
+        Debug.Log($"[ProjectSceneManager] Received connection failed event with reason: {reason}");
+        SceneManager.LoadScene(0, LoadSceneMode.Single);
     }
 
     public override void OnNetworkSpawn()
     {
         NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
+        NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnect;
+        NetworkManager.Singleton.OnSessionOwnerPromoted += HostUpdated;
         NetworkManager.Singleton.SceneManager.SetClientSynchronizationMode(LoadSceneMode.Additive);
         NetworkManager.Singleton.SceneManager.PostSynchronizationSceneUnloading = false;
         NetworkManager.Singleton.SceneManager.OnSceneEvent += HandleSceneEvent;
@@ -43,7 +68,47 @@ public class ProjectSceneManager : NetworkBehaviour
     {
         Debug.Log($"<color=cyan>[Connected]</color> Client with ID {clientId} connected.");
         m_Connected = true;
+
+        TeleportRequest teleportRequest = new()
+        {
+            destinationPosition = new Vector3(UnityEngine.Random.Range(-5f, 5), 0, UnityEngine.Random.Range(-5f, 5)),
+            destinationRotation = Quaternion.identity,
+            matchOrientation = MatchOrientation.TargetUpAndForward
+        };
+
+        m_LocalPlayerTeleportProvider.QueueTeleportRequest(teleportRequest);
     }
+
+    private void OnClientDisconnect(ulong clientId)
+    {
+        if (IsServer)
+        {
+            Debug.Log($"<color=orange>[Disconnected]</color> Client with ID {clientId} disconnected from server.");
+            int clientCount = NetworkManager.Singleton.ConnectedClients.Count;
+            if (clientCount == 0)
+            {
+                m_Connected = false;
+                Debug.Log("<color=orange>All clients have disconnected. Server is no longer connected.</color>");
+            }
+        }
+        else // IsClient                                                                               
+        {
+            Debug.Log($"<color=orange>[Disconnected]</color> Client disconnected from server with ID  {clientId}.");
+            m_Connected = false;
+        }
+        // The Host is always ClientId 0
+        if (clientId == 0)
+        {
+            Debug.Log("Host disconnected. Starting migration logic...");
+            // Implement your logic to find and start a new host
+        }
+    }
+    public virtual void HostUpdated(ulong newHostId)
+    {
+        Debug.Log($"Host Updated: {(NetworkObject.OwnerClientId == newHostId)}");
+        SceneManager.LoadScene(0, LoadSceneMode.Single);
+    }
+
     IEnumerator TimeToPing(float delay, string sceneName)
     {
         yield return new WaitForSeconds(delay);
@@ -53,9 +118,9 @@ public class ProjectSceneManager : NetworkBehaviour
     [Rpc(SendTo.Server)]
     public void PingRpc(string sceneName)
     {
-        Debug.Log("<color=magenta>Loaded Scenes"+ m_LoadedScenes.Count + " </color>");
+        Debug.Log("<color=magenta>Loaded Scenes "+ m_LoadedScenes.Count + " </color>");
         PongRpc(sceneName, "PONG!");
-        if(m_LoadedScenes.Count>1)
+        if(m_LoadedScenes.Count>=1)
         {
             UnloadScene(m_LoadedScenes.Last().Key);
         }
@@ -67,11 +132,30 @@ public class ProjectSceneManager : NetworkBehaviour
     }
 
     [Rpc(SendTo.ClientsAndHost)]
-    void PongRpc(string m_SceneName, string message)
+    void PongRpc(string sceneName, string message)
     {
-        Debug.Log($"<color=magenta>Received pong from server for ping {m_SceneName} and message {message}</color>");
+        Debug.Log($"<color=magenta>Received pong from server for ping {sceneName} and message {message}</color>");
     }
 
+    public void SetScene(int branch, int sceneindex)
+    {
+        m_BranchIndex = branch;
+        m_SceneIndex = sceneindex;
+        Debug.Log($"<color=magenta>Menu {branch}, {sceneindex}!</color>");
+        switch(branch)
+        {
+            case 1:
+                StartCoroutine(TimeToPing(1, m_SceneNames1[m_SceneIndex]));
+                break;
+            case 2:
+                StartCoroutine(TimeToPing(1, m_SceneNames2[m_SceneIndex]));
+                break;
+            case 3:
+                StartCoroutine(TimeToPing(1, m_SceneNames3[m_SceneIndex]));
+                break;
+        }
+        
+    }
     void Update()
     {
         if (m_Connected && Keyboard.current.numpad1Key.wasPressedThisFrame)
@@ -124,7 +208,7 @@ public class ProjectSceneManager : NetworkBehaviour
     {
         if (sceneEvent.SceneEventType == SceneEventType.LoadComplete)
         {
-            if (!m_LoadedScenes.ContainsKey(sceneEvent.SceneName))
+            if (!m_LoadedScenes.ContainsKey(sceneEvent.SceneName) && sceneEvent.SceneName != "01 Lobby")
             {
                 m_LoadedScenes.Add(sceneEvent.SceneName, sceneEvent.Scene);
                 Debug.Log($"Server: Successfully loaded and stored scene '{sceneEvent.SceneName}'");
@@ -156,6 +240,11 @@ public class ProjectSceneManager : NetworkBehaviour
                 if (sceneEvent.SceneName != scenename)
                 {
                     StartCoroutine(TimeToPing(0, scenename));
+                }
+                NetworkPhysicsInteractable[] interactables = GameObject.FindObjectsByType<NetworkPhysicsInteractable>(FindObjectsSortMode.None);
+                foreach(NetworkPhysicsInteractable interactable in interactables)
+                {
+                    interactable.NetworkObject.Despawn();
                 }
             }
         }
