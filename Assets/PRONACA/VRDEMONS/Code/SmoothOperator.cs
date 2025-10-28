@@ -8,6 +8,7 @@ public class SmoothOperator : MonoBehaviour
 {
     [SerializeField] ToggleGroup toggleGroup;
     [SerializeField] ProjectSceneManager projectSceneManager;
+    [SerializeField] Button btnApply;
     Dictionary<string, scenePair> additiveScenes;
     struct scenePair
     {
@@ -22,14 +23,20 @@ public class SmoothOperator : MonoBehaviour
         additiveScenes.Add("Tgg Carnicería", new scenePair { branch = 1, index = 2 });
         additiveScenes.Add("Tgg Percha 1", new scenePair { branch = 3, index = 0 });
         additiveScenes.Add("Tgg Percha 2", new scenePair { branch = 3, index = 1 });
+        foreach(Toggle toggle in toggleGroup.ActiveToggles())
+        {
+            toggle.onValueChanged.AddListener(OnToggleChange);
+        }
     }
     public void Apply()
     {
-        var toggles = toggleGroup.ActiveToggles();
-        foreach (Toggle toggle in toggles)
+        if(toggleGroup.AnyTogglesOn())
         {
-            if(toggle.isOn)
-                projectSceneManager.SetScene(additiveScenes[toggle.name].branch, additiveScenes[toggle.name].index);
+            projectSceneManager.SetScene(additiveScenes[toggleGroup.GetFirstActiveToggle().name].branch, additiveScenes[toggleGroup.GetFirstActiveToggle().name].index);
         }
+    }
+    public void OnToggleChange(bool value)
+    {
+        btnApply.interactable = toggleGroup.AnyTogglesOn();
     }
 }
