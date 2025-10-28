@@ -23,10 +23,6 @@ public class SmoothOperator : MonoBehaviour
         additiveScenes.Add("Tgg Carnicería", new scenePair { branch = 1, index = 2 });
         additiveScenes.Add("Tgg Percha 1", new scenePair { branch = 3, index = 0 });
         additiveScenes.Add("Tgg Percha 2", new scenePair { branch = 3, index = 1 });
-        foreach(Toggle toggle in toggleGroup.ActiveToggles())
-        {
-            toggle.onValueChanged.AddListener(OnToggleChange);
-        }
     }
     public void Apply()
     {
@@ -37,6 +33,7 @@ public class SmoothOperator : MonoBehaviour
     }
     public void OnToggleChange(bool value)
     {
+        Debug.Log($"Toggle changed to :{value}");
         btnApply.interactable = toggleGroup.AnyTogglesOn();
     }
 }
