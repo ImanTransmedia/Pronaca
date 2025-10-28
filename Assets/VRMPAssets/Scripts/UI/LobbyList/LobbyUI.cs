@@ -235,7 +235,8 @@ namespace XRMultiplayer
         {
             if (connected)
             {
-                ToggleConnectionSubPanel(ConnectionSubPanel.ConnectionSuccessPanel);
+                //ToggleConnectionSubPanel(ConnectionSubPanel.ConnectionSuccessPanel);
+                gameObject.SetActive(false);
                 XRINetworkGameManager.Connected.Unsubscribe(OnConnected);
             }
         }

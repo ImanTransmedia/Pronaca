@@ -68,7 +68,7 @@ public class ProjectSceneManager : NetworkBehaviour
     {
         Debug.Log($"<color=cyan>[Connected]</color> Client with ID {clientId} connected.");
         m_Connected = true;
-
+/*
         TeleportRequest teleportRequest = new()
         {
             destinationPosition = new Vector3(UnityEngine.Random.Range(-5f, 5), 0, UnityEngine.Random.Range(-5f, 5)),
@@ -77,6 +77,7 @@ public class ProjectSceneManager : NetworkBehaviour
         };
 
         m_LocalPlayerTeleportProvider.QueueTeleportRequest(teleportRequest);
+*/
     }
 
     private void OnClientDisconnect(ulong clientId)
