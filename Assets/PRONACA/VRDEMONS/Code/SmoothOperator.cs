@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+/// <summary>
+/// Operator Role
+/// </summary>
 public class SmoothOperator : MonoBehaviour
 {
     [SerializeField] ToggleGroup toggleGroup;
