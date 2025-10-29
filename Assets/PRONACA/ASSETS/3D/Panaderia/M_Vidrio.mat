@@ -13,7 +13,6 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
-  - _ALPHAPREMULTIPLY_ON
   - _COLORMAP
   - _MAPPING1_UV
   - _SURFACE_TYPE_TRANSPARENT
@@ -85,7 +84,7 @@ Material:
     - _BackFace: 0
     - _BackFaceTex_1: 0
     - _Blend: 0
-    - _BlendModePreserveSpecular: 1
+    - _BlendModePreserveSpecular: 0
     - _Brillo: 1
     - _BrilloRoughness: 1
     - _COLORMAP: 1
@@ -127,7 +126,7 @@ Material:
     - _SSS_ShadowStrenght: 0.5
     - _Saturacion: 1
     - _Seed: 0
-    - _SrcBlend: 1
+    - _SrcBlend: 5
     - _SrcBlendAlpha: 1
     - _Surface: 1
     - _Threshold: 0
