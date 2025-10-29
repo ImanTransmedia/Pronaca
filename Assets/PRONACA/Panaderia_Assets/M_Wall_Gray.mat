@@ -15,6 +15,7 @@ Material:
   m_ValidKeywords:
   - _COLORMAP
   - _MAPPING1_UV
+  - _ROUGHNESSMAP
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -113,7 +114,7 @@ Material:
     - _PowerTint: 0
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _ROUGHNESSMAP: 0
+    - _ROUGHNESSMAP: 1
     - _RandomHUE: 0
     - _ReceiveShadows: 1
     - _Rotation: 0
