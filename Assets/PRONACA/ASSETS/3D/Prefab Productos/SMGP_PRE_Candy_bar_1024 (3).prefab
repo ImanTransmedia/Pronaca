@@ -11,62 +11,62 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: ee9846798aa6ca348813b587accacbea,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: 0.016009996
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ee9846798aa6ca348813b587accacbea,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 1
+      value: 0.01601
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ee9846798aa6ca348813b587accacbea,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 1
+      value: 0.016010001
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ee9846798aa6ca348813b587accacbea,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.0038634425
+      value: -0.0005238256
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ee9846798aa6ca348813b587accacbea,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.0015166416
+      value: -0.0006562425
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ee9846798aa6ca348813b587accacbea,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.009080001
+      value: 0.009150002
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ee9846798aa6ca348813b587accacbea,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.012447358
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ee9846798aa6ca348813b587accacbea,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ee9846798aa6ca348813b587accacbea,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ee9846798aa6ca348813b587accacbea,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0.9999226
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ee9846798aa6ca348813b587accacbea,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: -90
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ee9846798aa6ca348813b587accacbea,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: -90
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ee9846798aa6ca348813b587accacbea,
         type: 3}
@@ -88,13 +88,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: SMGP_PRE_Candy_bar_1024 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ee9846798aa6ca348813b587accacbea,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 3105701974712445414, guid: ee9846798aa6ca348813b587accacbea,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 5681647554674153808, guid: ee9846798aa6ca348813b587accacbea,
         type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 3f81492b35b2644138f10cef22117d69, type: 2}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedComponents:
+    - {fileID: 4742473837712756890, guid: ee9846798aa6ca348813b587accacbea, type: 3}
+    m_RemovedGameObjects:
+    - {fileID: 2221600139784412712, guid: ee9846798aa6ca348813b587accacbea, type: 3}
+    - {fileID: 2188003586875364079, guid: ee9846798aa6ca348813b587accacbea, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ee9846798aa6ca348813b587accacbea,
